@@ -17,7 +17,16 @@ const sec2rps = function(s) {
 
 const fixation = {
   type: jsPsychHtmlButtonResponse,
-  stimulus: '<p>Fixationsscreen</p>',
+    stimulus: function() {
+        var trials = jsPsych.data.get()['trials']
+        try {
+            var prev_response = trials[trials.length - 1]['response']
+            return `<p>You responded ${RPS[prev_response]}</p>`;
+        } catch (err) {
+            return `<p>Please click X to start the first trial.</p>`;
+        }
+
+    },
   choices: ['X'],
   button_html: '<button class="jspsych-btn-fixation">%choice%</button>'
 }
@@ -33,7 +42,7 @@ var countdown = {
       var time_left = wait_time - (performance.now() - start_time);
       document.querySelector('#clock').innerHTML = sec2rps(time_left)
       if(time_left <= 0){
-        document.querySelector('#clock').innerHTML = "Schnuck";
+          // console.log("stop countdown")
         clearInterval(interval);
       }
     }, 250)
@@ -47,18 +56,8 @@ const decision = {
   button_html: '<button class="jspsych-btn-%pos%" accesskey="%scut%">%choice%</button>',
 }
 
-const feedback = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: function() {
-        var trials = jsPsych.data.get()['trials']
-        var prev_response = trials[trials.length - 1]['response']
-        return `<p>You responded ${RPS[prev_response]}</p>`;
-    },
-    choices: ["Click here to continue."],
-}
-
 var trial = {
-    timeline: [ fixation, countdown, decision, feedback]
+    timeline: [ fixation, countdown, decision]
 }
 
 const timeline = [trial, trial, trial];
