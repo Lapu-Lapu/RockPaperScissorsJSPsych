@@ -4,9 +4,6 @@ var jsPsych = initJsPsych({
 });
 
 const RPS = ["Rock", "Paper", "Scissors"]
-// var wins = 0
-// var losses = 0
-// var draws = 0
 var count = {
     win: 0,
     loss: 0,
@@ -35,6 +32,7 @@ const compute_result = function(p0, p1) {  // from perspective of p1
     return s
 }
 
+//////////////////////////// strategies //////////////////////////////////
 
 const nash_equilibrium_strategy = function() {
     var bot_response = Math.floor(Math.random() * 3);
@@ -60,7 +58,21 @@ const super_male_strategy = function () {
     return 0
 }
 
-const strategy = winstay;
+const dont_always_copy_opponent_move = function () {
+    var data = jsPsych.data.get().trials.filter(d => Boolean(d.response))
+    d = data[data.length-1]
+    if (!Boolean(d)) { return Math.floor(Math.random() * 3); }
+    result = compute_result(d.response, d.bot_response)
+    if ("loss" == result) {
+        return (d.response + 1 ) % 3;
+    } else if ("loss" == result) {
+        return d.response;
+    } else {
+        return Math.floor(Math.random() * 3); 
+    }
+} // https://www.kaggle.com/code/mainakchain/rps-getting-started-with-researched-winning-logic
+
+const strategy = dont_always_copy_opponent_move;
 
 
 const update_count = function (result) {
@@ -68,7 +80,7 @@ const update_count = function (result) {
     count[result] = count[result] + 1
 }
 
-// jsPsych Trials ////////////////////////////////////////////////////
+//////////////////// jsPsych Trials ////////////////////////////////////////////////////
 
 const fixation = {
     type: jsPsychHtmlButtonResponse,
