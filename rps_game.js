@@ -1,7 +1,6 @@
 var jsPsych = initJsPsych({
     on_finish: () => jatos.endStudy(jsPsych.data.get().json()),
     show_progress_bar: true,
-    // message_progress_bar: ''
 });
 
 const RPS = ["Rock", "Paper", "Scissors"]
@@ -34,6 +33,26 @@ const compute_result = function(p0, p1) {
     return s
 }
 
+
+const nash_equilibrium_strategy = function() {
+    var bot_response = Math.floor(Math.random() * 3);
+    return bot_response
+}
+
+const nash_equilibrium_strategy = function() {
+    var data = jsPsych.data.get().trials.filter(d => Boolean(d.response))
+    var bot_response = Math.floor(Math.random() * 3);
+    return bot_response
+}
+
+const super_male_strategy = function () {
+    return 0
+}
+
+const strategy = super_male_strategy;
+
+// jsPsych Trials ////////////////////////////////////////////////////
+
 const fixation = {
     type: jsPsychHtmlButtonResponse,
     stimulus: function() {
@@ -42,7 +61,7 @@ const fixation = {
             var bot_response = trials[trials.length - 1]['bot_response'];
             var prev_response = trials[trials.length - 1]['response'];
             var s = compute_result(bot_response, prev_response);
-            document.querySelector("#wins").innerHTML = `Wins: ${wins}, Losses: ${losses}, Draws: ${draws}`;
+            document.querySelector("#wins").innerHTML = `Wins: ${wins}, Losses: ${losses}, Draws: ${draws} (${wins/(wins+losses)})`;
             return s + `<p>You responded ${RPS[prev_response]}, bot ${RPS[bot_response]}</p>`;
         } catch (err) {
             if (err  instanceof TypeError){
@@ -86,10 +105,7 @@ const decision = {
     stimulus: '<p></p>',
     choices: ['R', 'P', 'S'],
     data: {
-        bot_response: function() {
-            var bot_response = Math.floor(Math.random() * 3);
-            return bot_response
-        }
+        bot_response: strategy
     },
     button_html: '<button class="jspsych-btn-%pos%" accesskey="%scut%">%choice%</button>',
 }
