@@ -1,8 +1,13 @@
 var jsPsych = initJsPsych({
-    on_finish: () => jatos.endStudy(jsPsych.data.get().json())
+    on_finish: () => jatos.endStudy(jsPsych.data.get().json()),
+    show_progress_bar: true,
+    // message_progress_bar: ''
 });
 
 const RPS = ["Rock", "Paper", "Scissors"]
+var wins = 0
+var losses = 0
+var draws = 0
 
 const sec2rps = function(s) {
     console.log(s)
@@ -17,10 +22,13 @@ const sec2rps = function(s) {
 
 const compute_result = function(p0, p1) {
     if (p0 == p1) {
+        draws = draws + 1
         var s = "<p>draw</p>";
     } else if ("0120".includes(String(p0) + String(p1))) {
+        wins = wins + 1
         var s = "<p>win</p>";
     } else if ("0210".includes(String(p0) + String(p1))) {
+        losses = losses + 1
         var s = "<p>loss</p>";
     }
     return s
@@ -34,9 +42,16 @@ const fixation = {
             var bot_response = trials[trials.length - 1]['bot_response'];
             var prev_response = trials[trials.length - 1]['response'];
             var s = compute_result(bot_response, prev_response);
+            document.querySelector("#wins").innerHTML = `Wins: ${wins}, Losses: ${losses}, Draws: ${draws}`;
             return s + `<p>You responded ${RPS[prev_response]}, bot ${RPS[bot_response]}</p>`;
         } catch (err) {
             if (err  instanceof TypeError){
+                console.log(err)
+                document
+                    .querySelector(".jspsych-display-element")
+                    .insertAdjacentHTML("afterbegin", '<div id="statistics-container">' +
+                        "<p><span id='wins'>Hallo!</span></p>"
+                    );
                 return `<p>Please click X to start the first trial.</p>`;
             }
             console.log(err)
