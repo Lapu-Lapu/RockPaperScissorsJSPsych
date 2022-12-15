@@ -4,9 +4,14 @@ var jsPsych = initJsPsych({
 });
 
 const RPS = ["Rock", "Paper", "Scissors"]
-var wins = 0
-var losses = 0
-var draws = 0
+// var wins = 0
+// var losses = 0
+// var draws = 0
+var count = {
+    win: 0,
+    loss: 0,
+    draw: 0
+}
 
 const sec2rps = function(s) {
     console.log(s)
@@ -21,14 +26,11 @@ const sec2rps = function(s) {
 
 const compute_result = function(p0, p1) {
     if (p0 == p1) {
-        draws = draws + 1
-        var s = "<p>draw</p>";
+        var s = "draw";
     } else if ("0120".includes(String(p0) + String(p1))) {
-        wins = wins + 1
-        var s = "<p>win</p>";
+        var s = "win";
     } else if ("0210".includes(String(p0) + String(p1))) {
-        losses = losses + 1
-        var s = "<p>loss</p>";
+        var s = "loss";
     }
     return s
 }
@@ -39,7 +41,7 @@ const nash_equilibrium_strategy = function() {
     return bot_response
 }
 
-const nash_equilibrium_strategy = function() {
+const always_switch = function() {
     var data = jsPsych.data.get().trials.filter(d => Boolean(d.response))
     var bot_response = Math.floor(Math.random() * 3);
     return bot_response
@@ -51,6 +53,12 @@ const super_male_strategy = function () {
 
 const strategy = super_male_strategy;
 
+
+const update_count = function (result) {
+    console.log(count)
+    count[result] = count[result] + 1
+}
+
 // jsPsych Trials ////////////////////////////////////////////////////
 
 const fixation = {
@@ -60,8 +68,10 @@ const fixation = {
         try {
             var bot_response = trials[trials.length - 1]['bot_response'];
             var prev_response = trials[trials.length - 1]['response'];
-            var s = compute_result(bot_response, prev_response);
-            document.querySelector("#wins").innerHTML = `Wins: ${wins}, Losses: ${losses}, Draws: ${draws} (${wins/(wins+losses)})`;
+            var result = compute_result(bot_response, prev_response)
+            var s = '<p>' + result + '</p>';
+            update_count(result)
+            document.querySelector("#wins").innerHTML = `Wins: ${count.win}, Losses: ${count.loss}, Draws: ${count.draw} (${count.win/(count.win+count.loss)})`;
             return s + `<p>You responded ${RPS[prev_response]}, bot ${RPS[bot_response]}</p>`;
         } catch (err) {
             if (err  instanceof TypeError){
