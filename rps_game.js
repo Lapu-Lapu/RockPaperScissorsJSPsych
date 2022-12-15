@@ -15,6 +15,17 @@ const sec2rps = function(s) {
     }
 }
 
+const compute_result = function(p0, p1) {
+    if (p0 == p1) {
+        var s = "<p>draw</p>";
+    } else if ("0120".includes(String(p0) + String(p1))) {
+        var s = "<p>win</p>";
+    } else if ("0210".includes(String(p0) + String(p1))) {
+        var s = "<p>loss</p>";
+    }
+    return s
+}
+
 const fixation = {
     type: jsPsychHtmlButtonResponse,
     stimulus: function() {
@@ -22,7 +33,8 @@ const fixation = {
         try {
             var bot_response = trials[trials.length - 1]['bot_response'];
             var prev_response = trials[trials.length - 1]['response'];
-            return `<p>You responded ${RPS[prev_response]}, bot ${RPS[bot_response]}</p>`;
+            var s = compute_result(bot_response, prev_response);
+            return s + `<p>You responded ${RPS[prev_response]}, bot ${RPS[bot_response]}</p>`;
         } catch (err) {
             if (err  instanceof TypeError){
                 return `<p>Please click X to start the first trial.</p>`;
