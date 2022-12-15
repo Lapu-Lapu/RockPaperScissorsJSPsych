@@ -24,7 +24,7 @@ const sec2rps = function(s) {
     }
 }
 
-const compute_result = function(p0, p1) {
+const compute_result = function(p0, p1) {  // from perspective of p1
     if (p0 == p1) {
         var s = "draw";
     } else if ("0120".includes(String(p0) + String(p1))) {
@@ -41,17 +41,26 @@ const nash_equilibrium_strategy = function() {
     return bot_response
 }
 
-const always_switch = function() {
+const winstay = function() {
     var data = jsPsych.data.get().trials.filter(d => Boolean(d.response))
-    var bot_response = Math.floor(Math.random() * 3);
-    return bot_response
+    d = data[data.length-1]
+    if (!Boolean(d)) { return Math.floor(Math.random() * 3); }
+    if ("win" == compute_result(d.response, d.bot_response)) {
+        return d.bot_response
+    } else {
+        var idxs = new Set([0, 1, 2])
+        idxs.delete(d.bot_response)
+        var arr = Array.from(idxs)
+        var r = Math.floor(Math.random() * 2);
+        return arr[r]
+    }
 }
 
 const super_male_strategy = function () {
     return 0
 }
 
-const strategy = super_male_strategy;
+const strategy = winstay;
 
 
 const update_count = function (result) {
@@ -124,7 +133,9 @@ var trial = {
     timeline: [fixation, countdown, decision]
 }
 
-const timeline = [trial, trial, trial, fixation];
+const N = 10
+const timeline = Array.from(".".repeat(N)).map(() => trial);
+timeline.push(fixation)
 
 jatos.onLoad(() => {
     jatos.addAbortButton();
