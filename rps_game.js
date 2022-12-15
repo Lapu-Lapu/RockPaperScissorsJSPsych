@@ -32,6 +32,33 @@ const compute_result = function(p0, p1) {  // from perspective of p1
     return s
 }
 
+
+function range(start, end) {
+    if(start === end) return [start];
+    return [start, ...range(start + 1, end)];
+}
+
+
+const update_count = function (result) {
+    console.log(count)
+    count[result] = count[result] + 1
+}
+
+function sample(p) {
+    i = Math.random()
+    if (i < p[0]) {
+        return 0;
+    } else if (i < p[1]){
+        return 1;
+    } else {
+        return 2;
+    }
+}
+
+function add(a, b) {
+    return a + b;
+}
+
 //////////////////////////// strategies //////////////////////////////////
 
 const nash_equilibrium_strategy = function() {
@@ -58,6 +85,28 @@ const super_male_strategy = function () {
     return 0
 }
 
+const rotate_strategy = function () {
+    var data = jsPsych.data.get().trials.filter(d => Boolean(d.response))
+    d = data[data.length-1]
+    if (!Boolean(d)) { return Math.floor(Math.random() * 3); }
+    var r = (d.bot_response + 1 ) % 3
+    return r;
+}
+
+const learn_preference = function() {
+    var data = jsPsych.data.get().trials.filter(d => Boolean(d.response))
+    d = data[data.length-1]
+    if (!Boolean(d)) { return Math.floor(Math.random() * 3); }
+    var scounts = range(0, 2).map((i) => data.map((x) => x.response == i).reduce((a, b) => a+b, 0))
+    scounts = scounts.map((x)=>x+1)
+    p = scounts.map((x)=>x/(scounts.reduce(add, 0)))
+    var prediction = sample(p)
+    // data.map((x) => x.response == 1)
+    // data.map((x) => x.response == 2)
+    console.log(`p: ${p}`)
+    return (prediction + 1) % 3; 
+}
+
 const dont_always_copy_opponent_move = function () {
     var data = jsPsych.data.get().trials.filter(d => Boolean(d.response))
     d = data[data.length-1]
@@ -72,13 +121,7 @@ const dont_always_copy_opponent_move = function () {
     }
 } // https://www.kaggle.com/code/mainakchain/rps-getting-started-with-researched-winning-logic
 
-const strategy = dont_always_copy_opponent_move;
-
-
-const update_count = function (result) {
-    console.log(count)
-    count[result] = count[result] + 1
-}
+const strategy = learn_preference;
 
 //////////////////// jsPsych Trials ////////////////////////////////////////////////////
 
