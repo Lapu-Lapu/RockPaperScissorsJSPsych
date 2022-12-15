@@ -20,11 +20,15 @@ const fixation = {
     stimulus: function() {
         var trials = jsPsych.data.get()['trials']
         try {
-            var bot_response = RPS[Math.floor(Math.random() * 3)];
+            var bot_response = trials[trials.length - 1]['bot_response'];
             var prev_response = trials[trials.length - 1]['response'];
-            return `<p>You responded ${RPS[prev_response]}, bot ${bot_response}</p>`;
+            return `<p>You responded ${RPS[prev_response]}, bot ${RPS[bot_response]}</p>`;
         } catch (err) {
-            return `<p>Please click X to start the first trial.</p>`;
+            if (err  instanceof TypeError){
+                return `<p>Please click X to start the first trial.</p>`;
+            }
+            console.log(err)
+            return `<p>Please click Y to start the first trial.</p>`;
         }
 
     },
@@ -54,6 +58,12 @@ const decision = {
     type: jsPsychHtmlButtonResponse,
     stimulus: '<p></p>',
     choices: ['R', 'P', 'S'],
+    data: {
+        bot_response: function() {
+            var bot_response = Math.floor(Math.random() * 3);
+            return bot_response
+        }
+    },
     button_html: '<button class="jspsych-btn-%pos%" accesskey="%scut%">%choice%</button>',
 }
 
