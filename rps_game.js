@@ -20,8 +20,9 @@ const fixation = {
     stimulus: function() {
         var trials = jsPsych.data.get()['trials']
         try {
-            var prev_response = trials[trials.length - 1]['response']
-            return `<p>You responded ${RPS[prev_response]}</p>`;
+            var bot_response = RPS[Math.floor(Math.random() * 3)];
+            var prev_response = trials[trials.length - 1]['response'];
+            return `<p>You responded ${RPS[prev_response]}, bot ${bot_response}</p>`;
         } catch (err) {
             return `<p>Please click X to start the first trial.</p>`;
         }
@@ -60,7 +61,7 @@ var trial = {
     timeline: [fixation, countdown, decision]
 }
 
-const timeline = [trial, trial, trial];
+const timeline = [trial, trial, trial, fixation];
 
 jatos.onLoad(() => {
     jatos.addAbortButton();
