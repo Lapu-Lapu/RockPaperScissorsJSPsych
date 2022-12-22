@@ -145,8 +145,16 @@ var trial = {
     timeline: [fixation, countdown, decision]
 }
 
+const fullscreen_trial = {
+    type: jsPsychFullscreen,
+    fullscreen_mode: true
+};
+
 const N = 10
-const timeline = Array.from(".".repeat(N)).map(() => trial);
+// const timeline = [fullscreen_trial]
+const timeline = []
+timeline.push(...Array.from(".".repeat(N)).map(() => trial));
+// const timeline = Array.from(".".repeat(N)).map(() => trial);
 timeline.push(fixation)
 
 jatos.onLoad(() => {
