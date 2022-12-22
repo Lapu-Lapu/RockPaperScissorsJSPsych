@@ -65,7 +65,7 @@ const dont_always_copy_opponent_move = function () {
     result = compute_result(d.response, d.bot_response)
     if ("loss" == result) {
         return (d.response + 1 ) % 3;
-    } else if ("loss" == result) {
+    } else if ("win" == result) {
         return d.response;
     } else {
         return Math.floor(Math.random() * 3); 
