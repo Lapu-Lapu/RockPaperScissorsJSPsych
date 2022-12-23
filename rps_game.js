@@ -1,5 +1,8 @@
 var jsPsych = initJsPsych({
-    on_finish: () => jatos.endStudy(jsPsych.data.get().json()),
+    on_finish: function() {
+        console.log(jsPsych.data.get().json());
+        jatos.endStudy(jsPsych.data.get().json());
+    },
     show_progress_bar: true,
 });
 
@@ -121,7 +124,7 @@ const dont_always_copy_opponent_move = function () {
     }
 } // https://www.kaggle.com/code/mainakchain/rps-getting-started-with-researched-winning-logic
 
-const strategy = learn_preference;
+const strategy = dont_always_copy_opponent_move;
 
 //////////////////// jsPsych Trials ////////////////////////////////////////////////////
 
@@ -181,6 +184,10 @@ const decision = {
     data: {
         bot_response: strategy
     },
+    on_finish: function() {
+        console.log(jsPsych.data.get().json());
+        jatos.submitResultData(jsPsych.data.get().json());
+    },
     button_html: '<button class="jspsych-btn-%pos%" accesskey="%scut%">%choice%</button>',
 }
 
@@ -193,7 +200,7 @@ const fullscreen_trial = {
     fullscreen_mode: true
 };
 
-const N = 10
+const N = 2
 // const timeline = [fullscreen_trial]
 const timeline = []
 timeline.push(...Array.from(".".repeat(N)).map(() => trial));
@@ -201,6 +208,6 @@ timeline.push(...Array.from(".".repeat(N)).map(() => trial));
 timeline.push(fixation)
 
 jatos.onLoad(() => {
-    jatos.addAbortButton();
+    // jatos.addAbortButton();
     jsPsych.run(timeline);
 });
