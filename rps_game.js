@@ -129,7 +129,7 @@ const strategy = dont_always_copy_opponent_move;
 //////////////////// jsPsych Trials ////////////////////////////////////////////////////
 
 const start = {
-    type: jsPsychHtmlButtonResponse,
+    type: jsPsychHtmlButtonResponseRPS,
     stimulus: '<p>.</p><p>Please click X to start the first trial.</p>',
     choices: ['X'],
     button_html: '<button class="jspsych-btn-fixation">%choice%</button>',
@@ -143,7 +143,7 @@ const start = {
 }
 
 const fixation = {
-    type: jsPsychHtmlButtonResponse,
+    type: jsPsychHtmlButtonResponseRPS,
     stimulus: function() {
         var trials = jsPsych.data.get()['trials']
         var bot_response = trials[trials.length - 1]['bot_response'];
@@ -176,7 +176,7 @@ var countdown = {
 }
 
 const decision = {
-    type: jsPsychHtmlButtonResponse,
+    type: jsPsychHtmlButtonResponseRPS,
     stimulus: '<p></p>',
     choices: ['R', 'P', 'S'],
     data: {

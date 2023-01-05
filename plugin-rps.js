@@ -1,4 +1,4 @@
-var jsPsychHtmlButtonResponse = (function (jspsych) {
+var jsPsychHtmlButtonResponseRPS = (function (jspsych) {
   'use strict';
 
   const idx2pos = {

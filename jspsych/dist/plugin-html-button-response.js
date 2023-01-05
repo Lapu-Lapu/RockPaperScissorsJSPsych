@@ -1,18 +1,6 @@
 var jsPsychHtmlButtonResponse = (function (jspsych) {
   'use strict';
 
-  const idx2pos = {
-      "R": "topleft",
-      "P": "topright",
-      "S": "bottom"
-  }
-
-  const idx2key = {
-      "R": "g",
-      "P": "h",
-      "S": "b"
-  }
-
   const info = {
       name: "html-button-response",
       parameters: {
@@ -105,8 +93,6 @@ var jsPsychHtmlButtonResponse = (function (jspsych) {
           html += '<div id="jspsych-html-button-response-btngroup">';
           for (var i = 0; i < trial.choices.length; i++) {
               var str = buttons[i].replace(/%choice%/g, trial.choices[i]);
-              str = str.replace(/%pos%/g, idx2pos[trial.choices[i]])
-              str = str.replace(/%scut%/g, idx2key[trial.choices[i]])
               html +=
                   '<div class="jspsych-html-button-response-button" style="display: inline-block; margin:' +
                       trial.margin_vertical +
