@@ -1,18 +1,6 @@
 var jsPsychHtmlButtonResponseRPS = (function (jspsych) {
   'use strict';
 
-  const idx2pos = {
-      "R": "topleft",
-      "P": "topright",
-      "S": "bottom"
-  }
-
-  const idx2key = {
-      "R": "g",
-      "P": "h",
-      "S": "b"
-  }
-
   const info = {
       name: "html-button-response",
       parameters: {

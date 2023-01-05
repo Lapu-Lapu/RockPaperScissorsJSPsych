@@ -6,7 +6,8 @@ var jsPsych = initJsPsych({
     show_progress_bar: true,
 });
 
-const RPS = ["Rock", "Paper", "Scissors"]
+const RPS = randomize(["Rock", "Paper", "Scissors"])
+console.log(RPS)
 
 var count = {
     win: 0,
@@ -108,7 +109,7 @@ const fixation = {
         var result = compute_result(bot_response, prev_response)
         update_count(result)
         document.querySelector("#wins").innerHTML = `Wins: ${count.win}, Losses: ${count.loss}, Draws: ${count.draw} (${count.win/(count.win+count.loss)})`;
-        return `<p>.</p><p>You responded ${RPS[prev_response]}, bot ${RPS[bot_response]}</p>`;
+        return `<p>.</p><p>You responded ${RPS[prev_response]}, bot ${RPS[bot_response]}</p><p>${result}</p>`;
     },
     choices: ['X'],
     button_html: '<button class="jspsych-btn-fixation">%choice%</button>'
@@ -132,10 +133,18 @@ var countdown = {
     }
 }
 
+const idx2pos = Object.assign(
+    {}, ..._.zip(RPS.map(x=>x[0]), ["topleft", "topright", "bottom"]).map((x) => ({[x[0]]: x[1]}))
+)
+
+const idx2key = Object.assign(
+    {}, ..._.zip(RPS.map(x=>x[0]), ["g", "h", "b"]).map((x) => ({[x[0]]: x[1]}))
+)
+
 const decision = {
     type: jsPsychHtmlButtonResponseRPS,
     stimulus: '<p></p>',
-    choices: ['R', 'P', 'S'],
+    choices: RPS.map(x => x[0]),
     data: {
         bot_response: strategy
     },

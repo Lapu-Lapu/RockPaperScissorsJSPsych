@@ -40,3 +40,21 @@ function sample(p) {
 function add(a, b) {
     return a + b;
 }
+
+function randomize(values) {
+    // https://www.w3docs.com/snippets/javascript/how-to-randomize-shuffle-a-javascript-array.html
+  let index = values.length,
+    randomIndex;
+
+  // While there remain elements to shuffle.
+  while (index != 0) {
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * index);
+    index--;
+
+    // And swap it with the current element.
+    [values[index], values[randomIndex]] = [values[randomIndex], values[index]];
+  }
+
+  return values;
+}
