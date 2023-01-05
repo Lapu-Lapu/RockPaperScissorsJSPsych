@@ -139,7 +139,7 @@ var jsPsychHtmlButtonResponseRPS = (function (jspsych) {
               var trial_data = {
                   rt: response.rt,
                   stimulus: trial.stimulus,
-                  response: response.button,
+                  response: RPS.map(x=>x[0])[response.button],
               };
               // clear the display
               display_element.innerHTML = "";

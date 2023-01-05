@@ -12,9 +12,11 @@ const sec2rps = function(s) {
 const compute_result = function(p0, p1) {  // from perspective of p1
     if (p0 == p1) {
         var s = "draw";
-    } else if ("0120".includes(String(p0) + String(p1))) {
+    // } else if ("0120".includes(String(p0) + String(p1))) {
+    } else if ("RPSR".includes(p0 + p1)) {
         var s = "win";
-    } else if ("0210".includes(String(p0) + String(p1))) {
+    // } else if ("0210".includes(String(p0) + String(p1))) {
+    } else if ("RSPR".includes(p0 + p1)) {
         var s = "loss";
     }
     return s

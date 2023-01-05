@@ -6,7 +6,15 @@ var jsPsych = initJsPsych({
     show_progress_bar: true,
 });
 
-const RPS = randomize(["Rock", "Paper", "Scissors"])
+const RPS = randomize(["R", "P", "S"])
+const rps2idx = Object.assign(
+    {}, ..._.zip(RPS.map(x=>x[0]), [0, 1, 2]).map((x) => ({[x[0]]: x[1]}))
+)
+const RPS2words = {
+    "R": "Stein",
+    "P": "Papier",
+    "S": "Schere"
+}
 console.log(RPS)
 
 var count = {
@@ -24,26 +32,29 @@ const update_count = function (result) {
 
 const nash_equilibrium_strategy = function() {
     var bot_response = Math.floor(Math.random() * 3);
-    return bot_response
+    return RPS[bot_response]
 }
 
 const winstay = function() {
-    var data = jsPsych.data.get().trials.filter(d => Boolean(d.response))
+    var data = jsPsych.data.get().trials.filter(d => Boolean(d.bot_response))
     d = data[data.length-1]
-    if (!Boolean(d)) { return Math.floor(Math.random() * 3); }
+    if (!Boolean(d)) { return RPS[Math.floor(Math.random() * 3)]; }
+    console.log(d)
     if ("win" == compute_result(d.response, d.bot_response)) {
+        console.log(`bot stays with ${d.bot_response}`)
         return d.bot_response
     } else {
         var idxs = new Set([0, 1, 2])
-        idxs.delete(d.bot_response)
+        idxs.delete(rps2idx[d.bot_response])
         var arr = Array.from(idxs)
         var r = Math.floor(Math.random() * 2);
-        return arr[r]
+        console.log(`sad bot shifts: select between ${arr}`)
+        return RPS[arr[r]]
     }
 }
 
 const super_male_strategy = function () {
-    return 0
+    return "R"
 }
 
 const rotate_strategy = function () {
@@ -82,7 +93,7 @@ const dont_always_copy_opponent_move = function () {
     }
 } // https://www.kaggle.com/code/mainakchain/rps-getting-started-with-researched-winning-logic
 
-const strategy = dont_always_copy_opponent_move;
+const strategy = winstay;
 
 //////////////////// jsPsych Trials ////////////////////////////////////////////////////
 
@@ -109,7 +120,8 @@ const fixation = {
         var result = compute_result(bot_response, prev_response)
         update_count(result)
         document.querySelector("#wins").innerHTML = `Wins: ${count.win}, Losses: ${count.loss}, Draws: ${count.draw} (${count.win/(count.win+count.loss)})`;
-        return `<p>.</p><p>You responded ${RPS[prev_response]}, bot ${RPS[bot_response]}</p><p>${result}</p>`;
+        // return `<p>.</p><p>You responded ${RPS[prev_response]}, bot ${RPS[bot_response]}</p><p>${result}</p>`;
+        return `<p>.</p><p>You responded ${RPS2words[prev_response]}, bot ${RPS2words[bot_response]}</p><p>${result}</p>`;
     },
     choices: ['X'],
     button_html: '<button class="jspsych-btn-fixation">%choice%</button>'
@@ -149,7 +161,7 @@ const decision = {
         bot_response: strategy
     },
     on_finish: function() {
-        console.log(jsPsych.data.get().json());
+        // console.log(jsPsych.data.get().json());
         jatos.submitResultData(jsPsych.data.get().json());
     },
     button_html: '<button class="jspsych-btn-%pos%" accesskey="%scut%">%choice%</button>',
@@ -164,7 +176,7 @@ const fullscreen_trial = {
     fullscreen_mode: true
 };
 
-const N = 2
+const N = 4
 // const timeline = [fullscreen_trial]
 const timeline = []
 
