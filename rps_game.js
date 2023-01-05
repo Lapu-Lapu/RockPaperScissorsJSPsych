@@ -128,32 +128,30 @@ const strategy = dont_always_copy_opponent_move;
 
 //////////////////// jsPsych Trials ////////////////////////////////////////////////////
 
+const start = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: '<p>.</p><p>Please click X to start the first trial.</p>',
+    choices: ['X'],
+    button_html: '<button class="jspsych-btn-fixation">%choice%</button>',
+    on_start: function () {
+        document
+            .querySelector(".jspsych-display-element")
+            .insertAdjacentHTML("afterbegin", '<div id="statistics-container">' +
+                "<p><span id='wins'>Hallo!</span></p>"
+            );
+    }
+}
+
 const fixation = {
     type: jsPsychHtmlButtonResponse,
     stimulus: function() {
         var trials = jsPsych.data.get()['trials']
-        try {
-            var bot_response = trials[trials.length - 1]['bot_response'];
-            var prev_response = trials[trials.length - 1]['response'];
-            var result = compute_result(bot_response, prev_response)
-            var s = '<p>' + result + '</p>';
-            update_count(result)
-            document.querySelector("#wins").innerHTML = `Wins: ${count.win}, Losses: ${count.loss}, Draws: ${count.draw} (${count.win/(count.win+count.loss)})`;
-            return s + `<p>You responded ${RPS[prev_response]}, bot ${RPS[bot_response]}</p>`;
-        } catch (err) {
-            if (err  instanceof TypeError){
-                console.log(err)
-                document
-                    .querySelector(".jspsych-display-element")
-                    .insertAdjacentHTML("afterbegin", '<div id="statistics-container">' +
-                        "<p><span id='wins'>Hallo!</span></p>"
-                    );
-                return `<p>Please click X to start the first trial.</p>`;
-            }
-            console.log(err)
-            return `<p>Please click Y to start the first trial.</p>`;
-        }
-
+        var bot_response = trials[trials.length - 1]['bot_response'];
+        var prev_response = trials[trials.length - 1]['response'];
+        var result = compute_result(bot_response, prev_response)
+        update_count(result)
+        document.querySelector("#wins").innerHTML = `Wins: ${count.win}, Losses: ${count.loss}, Draws: ${count.draw} (${count.win/(count.win+count.loss)})`;
+        return `<p>.</p><p>You responded ${RPS[prev_response]}, bot ${RPS[bot_response]}</p>`;
     },
     choices: ['X'],
     button_html: '<button class="jspsych-btn-fixation">%choice%</button>'
@@ -192,7 +190,7 @@ const decision = {
 }
 
 var trial = {
-    timeline: [fixation, countdown, decision]
+    timeline: [countdown, decision, fixation]
 }
 
 const fullscreen_trial = {
@@ -203,9 +201,10 @@ const fullscreen_trial = {
 const N = 2
 // const timeline = [fullscreen_trial]
 const timeline = []
+
+timeline.push(start)
 timeline.push(...Array.from(".".repeat(N)).map(() => trial));
 // const timeline = Array.from(".".repeat(N)).map(() => trial);
-timeline.push(fixation)
 
 jatos.onLoad(() => {
     // jatos.addAbortButton();
