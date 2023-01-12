@@ -6,15 +6,15 @@ var jsPsych = initJsPsych({
     show_progress_bar: true,
 });
 
-const RPS = randomize(["R", "P", "S"])
+const RPS = randomize(["R", "P", "S"]);
 const rps2idx = Object.assign(
-    {}, ..._.zip(RPS.map(x=>x[0]), [0, 1, 2]).map((x) => ({[x[0]]: x[1]}))
-)
+    {}, ..._.zip(RPS, [0, 1, 2]).map((x) => ({[x[0]]: x[1]}))
+);
 const RPS2words = {
     "R": "Stein",
     "P": "Papier",
     "S": "Schere"
-}
+};
 console.log(RPS)
 
 var count = {
@@ -146,17 +146,17 @@ var countdown = {
 }
 
 const idx2pos = Object.assign(
-    {}, ..._.zip(RPS.map(x=>x[0]), ["topleft", "topright", "bottom"]).map((x) => ({[x[0]]: x[1]}))
+    {}, ..._.zip(RPS, ["topleft", "topright", "bottom"]).map((x) => ({[x[0]]: x[1]}))
 )
 
 const idx2key = Object.assign(
-    {}, ..._.zip(RPS.map(x=>x[0]), ["g", "h", "b"]).map((x) => ({[x[0]]: x[1]}))
+    {}, ..._.zip(RPS, ["g", "h", "b"]).map((x) => ({[x[0]]: x[1]}))
 )
 
 const decision = {
     type: jsPsychHtmlButtonResponseRPS,
     stimulus: '<p></p>',
-    choices: RPS.map(x => x[0]),
+    choices: RPS,
     data: {
         bot_response: strategy
     },
