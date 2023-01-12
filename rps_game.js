@@ -203,6 +203,19 @@ timeline.push(start)
 timeline.push(...Array.from(".".repeat(N)).map(() => trial));
 // const timeline = Array.from(".".repeat(N)).map(() => trial);
 
+var survey = {
+    type: jsPsychSurveyText,
+    questions: [{
+        prompt: "Worauf haben Sie besonders geachtet?",
+        value: '',
+        required: false,
+        rows: 10,
+        columns: 40,
+        name: 'survey'
+    }]
+}
+timeline.push(survey)
+
 jatos.onLoad(() => {
     // jatos.addAbortButton();
     jsPsych.run(timeline);
