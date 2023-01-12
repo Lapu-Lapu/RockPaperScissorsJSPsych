@@ -113,8 +113,7 @@ const start = {
     on_start: function () {
         document
             .querySelector(".jspsych-display-element")
-            .insertAdjacentHTML("afterbegin", '<div id="statistics-container">' +
-                "<p><span id='wins'>Hallo!</span></p>"
+            .insertAdjacentHTML("afterbegin", '<div id="statistics-container">' + "<p><span id='wins'>`Wins: 0, Losses: 0, Draws: 0`</span></p>"
             );
     }
 }
