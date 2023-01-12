@@ -80,20 +80,21 @@ const learn_preference = function() {
 }
 
 const dont_always_copy_opponent_move = function () {
-    var data = jsPsych.data.get().trials.filter(d => Boolean(d.response))
+    var data = jsPsych.data.get().trials.filter(d => Boolean(d.bot_response))
     d = data[data.length-1]
-    if (!Boolean(d)) { return Math.floor(Math.random() * 3); }
+    if (!Boolean(d)) { return RPS[Math.floor(Math.random() * 3)]; }
     result = compute_result(d.response, d.bot_response)
     if ("loss" == result) {
-        return (d.response + 1 ) % 3;
+        // return (d.response + 1 ) % 3;
+        return beat_symbol[d.response];
     } else if ("win" == result) {
         return d.response;
     } else {
-        return Math.floor(Math.random() * 3); 
+        return RPS[Math.floor(Math.random() * 3)]; 
     }
 } // https://www.kaggle.com/code/mainakchain/rps-getting-started-with-researched-winning-logic
 
-const strategy = learn_preference;
+const strategy = dont_always_copy_opponent_move;
 
 //////////////////// jsPsych Trials ////////////////////////////////////////////////////
 
