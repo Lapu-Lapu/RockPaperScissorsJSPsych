@@ -39,7 +39,6 @@ const winstay = function() {
     var data = jsPsych.data.get().trials.filter(d => Boolean(d.bot_response))
     d = data[data.length-1]
     if (!Boolean(d)) { return RPS[Math.floor(Math.random() * 3)]; }
-    console.log(d)
     if ("win" == compute_result(d.response, d.bot_response)) {
         console.log(`bot stays with ${d.bot_response}`)
         return d.bot_response
@@ -58,11 +57,13 @@ const super_male_strategy = function () {
 }
 
 const rotate_strategy = function () {
-    var data = jsPsych.data.get().trials.filter(d => Boolean(d.response))
+    var data = jsPsych.data.get().trials.filter(d => Boolean(d.bot_response))
     d = data[data.length-1]
-    if (!Boolean(d)) { return Math.floor(Math.random() * 3); }
-    var r = (d.bot_response + 1 ) % 3
-    return r;
+    if (!Boolean(d)) {
+        return RPS[Math.floor(Math.random() * 3)];
+    }
+    var r = (rps2idx[d.bot_response] + 1 ) % 3
+    return RPS[r];
 }
 
 const learn_preference = function() {
@@ -93,7 +94,7 @@ const dont_always_copy_opponent_move = function () {
     }
 } // https://www.kaggle.com/code/mainakchain/rps-getting-started-with-researched-winning-logic
 
-const strategy = winstay;
+const strategy = rotate_strategy;
 
 //////////////////// jsPsych Trials ////////////////////////////////////////////////////
 
