@@ -29,6 +29,12 @@ const beat_symbol = {
     S: "R"
 }
 
+const lose_symbol = {
+    R: "S",
+    P: "R",
+    S: "P"
+}
+
 
 function range(start, end) {
     if(start === end) return [start];

@@ -88,7 +88,8 @@ const dont_always_copy_opponent_move = function () {
         // return (d.response + 1 ) % 3;
         return beat_symbol[d.response];
     } else if ("win" == result) {
-        return d.response;
+        // return lose_symbol[d.response]; // better if player just switches
+        return d.response;  // better if player uses bots previous
     } else {
         return RPS[Math.floor(Math.random() * 3)]; 
     }
