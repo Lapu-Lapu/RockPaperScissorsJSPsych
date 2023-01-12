@@ -16,6 +16,7 @@ const RPS2words = {
     "S": "Schere"
 };
 console.log(RPS)
+const countdown_time = 3000; // in milliseconds
 
 var count = {
     win: 0,
@@ -131,9 +132,9 @@ const fixation = {
 var countdown = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: '<p><span id="clock"></span>',
-    trial_duration: 3000,
+    trial_duration: countdown_time,
     on_start: function() {
-        var wait_time = 1 * 3 * 1000; // in milliseconds
+        var wait_time = countdown_time;
         var start_time = performance.now();
         var interval = setInterval(function() {
             var time_left = wait_time - (performance.now() - start_time);
