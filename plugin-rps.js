@@ -1,6 +1,15 @@
 var jsPsychHtmlButtonResponseRPS = (function (jspsych) {
   'use strict';
 
+  function maybe_emoji(x){
+      const rps_emoji = {
+          R: '<div style="font-size:20px;">&#9994;</div>',
+          P: '<div style="font-size:20px;">&#9995;</div>',
+          S: '<div style="font-size:20px;">&#9996;</div>'
+      };
+      return x in rps_emoji ? rps_emoji[x] : x
+  }
+
   const info = {
       name: "html-button-response",
       parameters: {
@@ -90,7 +99,7 @@ var jsPsychHtmlButtonResponseRPS = (function (jspsych) {
           }
           var html = '<div class="container" id="jspsych-html-button-response-btngroup">';
           for (var i = 0; i < trial.choices.length; i++) {
-              var str = buttons[i].replace(/%choice%/g, trial.choices[i]);
+              var str = buttons[i].replace(/%choice%/g, maybe_emoji(trial.choices[i]));
               str = str.replace(/%pos%/g, idx2pos[trial.choices[i]])
               str = str.replace(/%scut%/g, idx2key[trial.choices[i]])
               html +=
