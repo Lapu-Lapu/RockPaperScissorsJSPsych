@@ -101,7 +101,12 @@ const dont_always_copy_opponent_move = function () {
     }
 } // https://www.kaggle.com/code/mainakchain/rps-getting-started-with-researched-winning-logic
 
-const strategy = dont_always_copy_opponent_move;
+const strategies = [nash_equilibrium_strategy, winstay, rotate_strategy, learn_preference, dont_always_copy_opponent_move];
+const sampled_strategy = Math.floor(Math.random() * strategies.length);
+console.log('strategy:')
+console.log(sampled_strategy);
+//const strategy = dont_always_copy_opponent_move;
+const strategy = strategies[sampled_strategy];
 
 //////////////////// jsPsych Trials ////////////////////////////////////////////////////
 
@@ -109,6 +114,7 @@ const start = {
     type: jsPsychHtmlButtonResponseRPS,
     stimulus: '<p>.</p><p>Please click X to start the first trial.</p>',
     choices: ['X'],
+    data: {strategy: sampled_strategy},
     button_html: '<button class="jspsych-btn-fixation">%choice%</button>',
     on_start: function () {
         document
