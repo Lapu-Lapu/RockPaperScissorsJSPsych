@@ -17,6 +17,12 @@ const RPS2words = {
 };
 console.log(RPS)
 const countdown_time = 3000; // in milliseconds
+const N = 10;
+
+const group = (Math.random() < 0.5) ? 1 : 2
+const instructions = (group == 1) ? instructions1 : instructions2
+
+const timeline = []
 
 var count = {
     win: 0,
@@ -178,9 +184,20 @@ const fullscreen_trial = {
     fullscreen_mode: true
 };
 
-const N = 4
 // const timeline = [fullscreen_trial]
-const timeline = []
+var consent = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: consent_msg,
+    choices: ["Ich stimme zu."],
+}
+timeline.push(consent)
+
+var welcome = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: instructions,
+      choices: ['Start the experiment!']
+};
+timeline.push(welcome)
 
 timeline.push(start)
 timeline.push(...Array.from(".".repeat(N)).map(() => trial));

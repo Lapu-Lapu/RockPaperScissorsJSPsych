@@ -5,6 +5,7 @@
     <script src="jatos.js"></script>
     <script src="jspsych/dist/jspsych.js"></script>
     <script src="jspsych/dist/plugin-html-keyboard-response.js"></script>
+    <script src="jspsych/dist/plugin-html-button-response.js"></script>
     <script src="plugin-rps.js"></script>
     <script src='utils.js'></script>
     <script src='underscore-umd.js'></script>
@@ -15,6 +16,11 @@
     <link href="custom.css" rel="stylesheet" type="text/css" />
   </head>
   <body></body>
+  <script>
+        let consent_msg = "<b> Einverständniserklärung </b> <br> <br> In dieser Studie untersuchen wir Schnick Schnack Schnuck. Die Studie ist Teil des Experimentalpraktikums (2022) am Fachbereich für Psychologie und wird zu Lernzwecken durchgeführt. <br> <br> Mit meiner Einwilligung erkläre ich, dass ich die Information zur Studie gelesen und verstanden habe. Ich habe keine weiteren Fragen bezüglich der Studie und der verbundenen Risiken. Ich weiß, dass eine Ablehnung oder ein Rücktritt von der Studie keine negativen Konsequenzen für mich hat. Ich entscheide mich freiwillig für die Teilnahme an der Studie und willige in die Verarbeitung und ggf. Veröffentlichung meiner pseudonomisierten Daten ein. Ich weiß, dass die von mir erhobenen Daten aufgrund der Pseudonomisierung nicht mehr gelöscht werden können und stimme diesem zu. <br> <br> Wenn Sie Fragen zur Forschung oder zu den Rechten der Studienteilnehmer*innen hast, zögern Sie bitte nicht, die Forscher über diese E-Mail zu kontaktieren: knoppbe@staff.uni-marburg.de <br> <br> Um einzuwilligen, klicke bitte 'Ich stimme zu.' <br> Wenn Sie nicht einwilligen, können Sie einfach das Browserfenster schließen, um das Experiment zu beenden. <br> <br>  "
+        let instructions1 = "<b>Herzlich willkommen zu unserer Studie!</b>\n\n<br>Im Folgenden ...(Gruppe 1)</br>"
+        let instructions2 = "<b>Herzlich willkommen zu unserer Studie!</b>\n\n<br>Im Folgenden ...(Gruppe 2)</br>"
+  </script>
   <script src="rps_game.js">
   </script>
 </html>
