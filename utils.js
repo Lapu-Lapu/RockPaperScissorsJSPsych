@@ -23,6 +23,13 @@ const compute_result = function(p0, p1) {  // from perspective of p1
 }
 
 
+const beat_symbol = {
+    R: "P",
+    P: "S",
+    S: "R"
+}
+
+
 function range(start, end) {
     if(start === end) return [start];
     return [start, ...range(start + 1, end)];

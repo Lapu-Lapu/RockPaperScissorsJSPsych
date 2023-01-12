@@ -68,17 +68,15 @@ const rotate_strategy = function () {
 }
 
 const learn_preference = function() {
-    var data = jsPsych.data.get().trials.filter(d => Boolean(d.response))
+    var data = jsPsych.data.get().trials.filter(d => Boolean(d.bot_response))
     d = data[data.length-1]
-    if (!Boolean(d)) { return Math.floor(Math.random() * 3); }
-    var scounts = range(0, 2).map((i) => data.map((x) => x.response == i).reduce((a, b) => a+b, 0))
+    if (!Boolean(d)) { return RPS[Math.floor(Math.random() * 3)]; }
+    var scounts = range(0, 2).map((i) => data.map((x) => rps2idx[x.response] == i).reduce((a, b) => a+b, 0))
     scounts = scounts.map((x)=>x+1)
     p = scounts.map((x)=>x/(scounts.reduce(add, 0)))
-    var prediction = sample(p)
-    // data.map((x) => x.response == 1)
-    // data.map((x) => x.response == 2)
+    var prediction = RPS[sample(p)]
     console.log(`p: ${p}`)
-    return (prediction + 1) % 3; 
+    return beat_symbol[prediction];
 }
 
 const dont_always_copy_opponent_move = function () {
@@ -95,7 +93,7 @@ const dont_always_copy_opponent_move = function () {
     }
 } // https://www.kaggle.com/code/mainakchain/rps-getting-started-with-researched-winning-logic
 
-const strategy = rotate_strategy;
+const strategy = learn_preference;
 
 //////////////////// jsPsych Trials ////////////////////////////////////////////////////
 
