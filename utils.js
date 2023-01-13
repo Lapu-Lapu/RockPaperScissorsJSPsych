@@ -1,8 +1,8 @@
 const sec2rps = function(s) {
     console.log(s)
-    if (s > 2000) {
+    if (s > 800) {
         return "Schnick"
-    } else if (s > 1000) {
+    } else if (s > 400) {
         return "Schnack"
     } else {
         return "Schnuck"

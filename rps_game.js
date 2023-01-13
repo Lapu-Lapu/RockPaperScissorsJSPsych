@@ -16,8 +16,8 @@ const RPS2words = {
     "S": "Schere"
 };
 console.log(RPS)
-const countdown_time = 3000; // in milliseconds
-const N = 10;
+const countdown_time = 1500; // in milliseconds
+const N = 200;
 
 const group = (Math.random() < 0.5) ? 1 : 2
 const instructions = (group == 1) ? instructions1 : instructions2
@@ -159,9 +159,10 @@ var countdown = {
             document.querySelector('#clock').innerHTML = sec2rps(time_left)
             if (time_left <= 0) {
                 // console.log("stop countdown")
+		document.querySelector('#clock').innerHTML = "";
                 clearInterval(interval);
             }
-        }, 250)
+        }, 400)
     }
 }
 
