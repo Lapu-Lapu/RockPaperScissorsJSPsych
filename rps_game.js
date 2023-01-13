@@ -30,6 +30,13 @@ var count = {
     draw: 0
 }
 
+
+const translate = {
+    win: "Gewonnen! :-)",
+    loss: "Verloren :-(",
+    draw: "Unentschieden"
+}
+
 const update_count = function (result) {
     console.log(count)
     count[result] = count[result] + 1
@@ -112,14 +119,14 @@ const strategy = strategies[sampled_strategy];
 
 const start = {
     type: jsPsychHtmlButtonResponseRPS,
-    stimulus: '<p>.</p><p>Please click X to start the first trial.</p>',
+    stimulus: '<p>.</p><p>Klicken Sie auf X um die erste Runde zu starten.</p>',
     choices: ['X'],
     data: {strategy: sampled_strategy},
     button_html: '<button class="jspsych-btn-fixation">%choice%</button>',
     on_start: function () {
         document
             .querySelector(".jspsych-display-element")
-            .insertAdjacentHTML("afterbegin", '<div id="statistics-container">' + "<p><span id='wins'>`Wins: 0, Losses: 0, Draws: 0`</span></p>"
+            .insertAdjacentHTML("afterbegin", '<div id="statistics-container">' + "<p><span id='wins'>`Gewonnen: 0, Verloren: 0, Unentschieden: 0`</span></p>"
             );
     }
 }
@@ -132,9 +139,9 @@ const fixation = {
         var prev_response = trials[trials.length - 1]['response'];
         var result = compute_result(bot_response, prev_response)
         update_count(result)
-        document.querySelector("#wins").innerHTML = `Wins: ${count.win}, Losses: ${count.loss}, Draws: ${count.draw} (${count.win/(count.win+count.loss)})`;
-        // return `<p>.</p><p>You responded ${RPS[prev_response]}, bot ${RPS[bot_response]}</p><p>${result}</p>`;
-        return `<p>.</p><p>You responded ${RPS2words[prev_response]}, bot ${RPS2words[bot_response]}</p><p>${result}</p>`;
+        document.querySelector("#wins").innerHTML = `Gewonnen: ${count.win}, Verloren: ${count.loss}, Unentschieden: ${count.draw} (${count.win/(count.win+count.loss)})`;
+        // return `<p>.</p><p>Sie haben ${RPS[prev_response]} gewählt, der Gegner ${RPS[bot_response]}.</p><p>${result}</p>`;
+        return `<p>.</p><p>Sie haben ${RPS2words[prev_response]} gewählt, der Gegner ${RPS2words[bot_response]}.</p><p>${translate[result]}</p>`;
     },
     choices: ['X'],
     button_html: '<button class="jspsych-btn-fixation">%choice%</button>'
@@ -200,7 +207,7 @@ timeline.push(consent)
 var welcome = {
       type: jsPsychHtmlButtonResponse,
       stimulus: instructions,
-      choices: ['Start the experiment!']
+      choices: ['Experiment starten!']
 };
 timeline.push(welcome)
 
