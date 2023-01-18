@@ -3,6 +3,23 @@
   width: 130px;
   height: 260px;
 }
+
+/* custom statistics display derived from progressbar */
+#statistics-container {
+  color: #555;
+  border-bottom: 1px solid #dedede;
+  background-color: #f9f9f9;
+  margin-bottom: 1em;
+  text-align: center;
+  padding: 8px 0px;
+  width: 100%;
+  line-height: 1em;
+}
+
+#statistics-container span {
+  font-size: 14px;
+  padding-right: 14px;
+}
 .jspsych-btn-topleft {
   display: inline-block;
   padding: 6px 12px;
