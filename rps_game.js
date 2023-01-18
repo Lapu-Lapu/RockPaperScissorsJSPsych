@@ -147,7 +147,7 @@ const fixation = {
         var win_percent = (100*count.win/(count.win+count.loss)).toFixed(1)
         document.querySelector("#wins").innerHTML = `Runde ${count.total} von 200.<br>Gewonnen: ${count.win}, Verloren: ${count.loss}, Unentschieden: ${count.draw} (${win_percent}%)`;
         // return `<p>.</p><p>Sie haben ${RPS[prev_response]} gewählt, der Gegner ${RPS[bot_response]}.</p><p>${result}</p>`;
-        return `<p>.</p><p>Sie haben ${RPS2words[prev_response]} gewählt, der Gegner ${RPS2words[bot_response]}.</p><p>${translate[result]}</p>`;
+        return `<p>.</p><p>Sie haben ${RPS2words[prev_response]} ${rps_emoji[prev_response]}<br>gewählt, der Gegner ${RPS2words[bot_response]} ${rps_emoji[bot_response]}</p><p>${translate[result]}</p>`;
     },
     choices: [fixation_cross],
     button_html: '<button class="jspsych-btn-fixation">%choice%</button>'

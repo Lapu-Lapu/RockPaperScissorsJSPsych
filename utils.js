@@ -35,6 +35,11 @@ const lose_symbol = {
     S: "P"
 }
 
+const rps_emoji = {
+  R: '<div style="font-size:20px;">&#9994;</div>',
+  P: '<div style="font-size:20px;">&#9995;</div>',
+  S: '<div style="font-size:20px;">&#9996;</div>'
+};
 
 function range(start, end) {
     if(start === end) return [start];
