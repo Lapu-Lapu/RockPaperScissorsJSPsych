@@ -112,8 +112,8 @@ const dont_always_copy_opponent_move = function () {
 } // https://www.kaggle.com/code/mainakchain/rps-getting-started-with-researched-winning-logic
 
 const strategies = [super_male_strategy, nash_equilibrium_strategy, winstay, rotate_strategy, learn_preference, dont_always_copy_opponent_move];
-// const sampled_strategy = Math.floor(Math.random() * strategies.length);
-const sampled_strategy = 0
+const sampled_strategy = Math.floor(Math.random() * strategies.length - 1) + 1;
+// const sampled_strategy = 0
 console.log('strategy:')
 console.log(sampled_strategy);
 //const strategy = dont_always_copy_opponent_move;
