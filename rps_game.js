@@ -34,9 +34,9 @@ var count = {
 
 
 const translate = {
-    win: "Gewonnen! :-)",
-    loss: "Verloren :-(",
-    draw: "Unentschieden"
+    win: "<div style='color:#006600;'>Gewonnen! :-)</div>",
+    loss: "<div style='color:#FF0000;'>Verloren :-(</div>",
+    draw: "<div>Unentschieden</div>"
 }
 
 const update_count = function (result) {
