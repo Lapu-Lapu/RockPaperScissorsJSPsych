@@ -143,7 +143,8 @@ const fixation = {
         var prev_response = trials[trials.length - 1]['response'];
         var result = compute_result(bot_response, prev_response)
         update_count(result)
-        document.querySelector("#wins").innerHTML = `Runde ${count.total} von 200.<br>Gewonnen: ${count.win}, Verloren: ${count.loss}, Unentschieden: ${count.draw} (${count.win/(count.win+count.loss)})`;
+        var win_percent = (100*count.win/(count.win+count.loss)).toFixed(1)
+        document.querySelector("#wins").innerHTML = `Runde ${count.total} von 200.<br>Gewonnen: ${count.win}, Verloren: ${count.loss}, Unentschieden: ${count.draw} (${win_percent}%)`;
         // return `<p>.</p><p>Sie haben ${RPS[prev_response]} gewählt, der Gegner ${RPS[bot_response]}.</p><p>${result}</p>`;
         return `<p>.</p><p>Sie haben ${RPS2words[prev_response]} gewählt, der Gegner ${RPS2words[bot_response]}.</p><p>${translate[result]}</p>`;
     },
