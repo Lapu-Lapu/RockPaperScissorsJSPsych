@@ -4,6 +4,7 @@ var jsPsych = initJsPsych({
         jatos.endStudy(jsPsych.data.get().json());
     },
     show_progress_bar: true,
+    message_progress_bar: 'Fortschritt'
 });
 
 const RPS = randomize(["R", "P", "S"]);
@@ -27,7 +28,8 @@ const timeline = []
 var count = {
     win: 0,
     loss: 0,
-    draw: 0
+    draw: 0,
+    total: 0,
 }
 
 
@@ -38,8 +40,9 @@ const translate = {
 }
 
 const update_count = function (result) {
-    console.log(count)
-    count[result] = count[result] + 1
+    console.log(count);
+    count[result] = count[result] + 1;
+    count.total = count.total + 1;
 }
 
 //////////////////////////// strategies //////////////////////////////////
@@ -126,7 +129,7 @@ const start = {
     on_start: function () {
         document
             .querySelector(".jspsych-display-element")
-            .insertAdjacentHTML("afterbegin", '<div id="statistics-container">' + "<p><span id='wins'>`Gewonnen: 0, Verloren: 0, Unentschieden: 0`</span></p>"
+            .insertAdjacentHTML("afterbegin", '<div id="statistics-container">' + "<p><span id='wins'>Runde 0 von 200.<br>Gewonnen: 0, Verloren: 0, Unentschieden: 0</span></p>"
             );
     }
 }
@@ -139,7 +142,7 @@ const fixation = {
         var prev_response = trials[trials.length - 1]['response'];
         var result = compute_result(bot_response, prev_response)
         update_count(result)
-        document.querySelector("#wins").innerHTML = `Gewonnen: ${count.win}, Verloren: ${count.loss}, Unentschieden: ${count.draw} (${count.win/(count.win+count.loss)})`;
+        document.querySelector("#wins").innerHTML = `Runde ${count.total} von 200.<br>Gewonnen: ${count.win}, Verloren: ${count.loss}, Unentschieden: ${count.draw} (${count.win/(count.win+count.loss)})`;
         // return `<p>.</p><p>Sie haben ${RPS[prev_response]} gewählt, der Gegner ${RPS[bot_response]}.</p><p>${result}</p>`;
         return `<p>.</p><p>Sie haben ${RPS2words[prev_response]} gewählt, der Gegner ${RPS2words[bot_response]}.</p><p>${translate[result]}</p>`;
     },
