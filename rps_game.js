@@ -117,13 +117,14 @@ console.log('strategy:')
 console.log(sampled_strategy);
 //const strategy = dont_always_copy_opponent_move;
 const strategy = strategies[sampled_strategy];
+const fixation_cross = '<div style="font-size:20px;"><b>+</b></div>';
 
 //////////////////// jsPsych Trials ////////////////////////////////////////////////////
 
 const start = {
     type: jsPsychHtmlButtonResponseRPS,
-    stimulus: '<p>.</p><p>Klicken Sie auf X um die erste Runde zu starten.</p>',
-    choices: ['X'],
+    stimulus: `<p>.</p><p>Klicken Sie auf ${fixation_cross} um die erste Runde zu starten.</p>`,
+    choices: [fixation_cross],
     data: {strategy: sampled_strategy},
     button_html: '<button class="jspsych-btn-fixation">%choice%</button>',
     on_start: function () {
@@ -146,7 +147,7 @@ const fixation = {
         // return `<p>.</p><p>Sie haben ${RPS[prev_response]} gewählt, der Gegner ${RPS[bot_response]}.</p><p>${result}</p>`;
         return `<p>.</p><p>Sie haben ${RPS2words[prev_response]} gewählt, der Gegner ${RPS2words[bot_response]}.</p><p>${translate[result]}</p>`;
     },
-    choices: ['X'],
+    choices: [fixation_cross],
     button_html: '<button class="jspsych-btn-fixation">%choice%</button>'
 }
 
