@@ -25,6 +25,32 @@ const instructions = (group == 1) ? instructions1 : instructions2
 
 const timeline = []
 
+var survey = {
+  type: jsPsychSurvey,
+  pages: [
+    [
+      {
+        type: 'multi-choice',
+        prompt: "Haben Sie bewusst eine Spielstrategie angewendet?",
+        name: 'SpielstrategieQ',
+        options: ['Nein.', 'Ja, ich habe versucht möglichst zufällig zu spielen.',
+            'Ja, ich habe mein Symbol nach jedem Spielzug geändert.',
+            'Ja, ich habe immer das Symbol gewählt, das im vorherigen Spielzug gewonnen hätte.',
+            'Ja, andere Strategie (bitte unten angeben).'],
+        required: true
+      },
+      {
+        type: 'text',
+        prompt: "Andere Strategie:",
+        name: 'freieStrategieQ',
+        textbox_rows: 8,
+        required: false,
+      }
+    ]
+  ],
+};
+timeline.push(survey)
+
 var count = {
     win: 0,
     loss: 0,
