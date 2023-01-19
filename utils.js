@@ -40,6 +40,11 @@ const rps_emoji = {
   P: '<div style="font-size:31px;translate:-1px -1px">&#9995;</div>',
   S: '<div style="font-size:31px;translate:-1px -1px">&#9996;</div>'
 };
+const rps_emoji_symbols = {
+  R: '<div style="font-size:31px;translate:-1px -1px">&#129704;</div>',
+  P: '<div style="font-size:31px;translate:-1px -1px">&#128196;</div>',
+  S: '<div style="font-size:31px;translate:-1px -1px">&#9986;</div>'
+};
 
 function range(start, end) {
     if(start === end) return [start];

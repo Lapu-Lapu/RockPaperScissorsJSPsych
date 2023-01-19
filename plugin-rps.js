@@ -3,10 +3,15 @@ var jsPsychHtmlButtonResponseRPS = (function (jspsych) {
 
   function maybe_emoji(x){
       const rps_emoji = {
-          R: '<div style="font-size:31px;translate:-12px -9px">&#9994;</div>',
-          P: '<div style="font-size:31px;translate:-12px -9px">&#9995;</div>',
-          S: '<div style="font-size:31px;translate:-12px -9px">&#9996;</div>'
+          R: '<div style="font-size:31px;">&#9994;</div>',
+          P: '<div style="font-size:31px;">&#9995;</div>',
+          S: '<div style="font-size:31px;">&#9996;</div>'
       };
+	const rps_emoji_symbols = {
+	  R: '<div style="font-size:31px;translate:-1px -1px">&#129704;</div>',
+	  P: '<div style="font-size:31px;translate:-1px -1px">&#128196;</div>',
+	  S: '<div style="font-size:31px;translate:-1px -1px">&#9986;</div>'
+	};
       return x in rps_emoji ? rps_emoji[x] : x
   }
 
