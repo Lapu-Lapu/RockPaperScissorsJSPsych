@@ -1,7 +1,8 @@
 var jsPsych = initJsPsych({
     on_finish: function() {
-        console.log(jsPsych.data.get().json());
-        jatos.endStudy(jsPsych.data.get().json());
+        //console.log(jsPsych.data.get().json());
+        jatos.submitResultData(jsPsych.data.get().json());
+        jatos.endStudy();
     },
     show_progress_bar: true,
     message_progress_bar: 'Fortschritt'
@@ -18,7 +19,7 @@ const RPS2words = {
 };
 console.log(RPS)
 const countdown_time = 1500; // in milliseconds
-const N = 200;
+const N = 20;
 
 const group = (Math.random() < 0.5) ? 1 : 2
 const instructions = (group == 1) ? instructions1 : instructions2
@@ -49,7 +50,6 @@ var survey = {
     ]
   ],
 };
-timeline.push(survey)
 
 var count = {
     win: 0,
@@ -248,17 +248,6 @@ timeline.push(start)
 timeline.push(...Array.from(".".repeat(N)).map(() => trial));
 // const timeline = Array.from(".".repeat(N)).map(() => trial);
 
-var survey = {
-    type: jsPsychSurveyText,
-    questions: [{
-        prompt: "Worauf haben Sie besonders geachtet?",
-        value: '',
-        required: false,
-        rows: 10,
-        columns: 40,
-        name: 'survey'
-    }]
-}
 timeline.push(survey)
 
 jatos.onLoad(() => {
