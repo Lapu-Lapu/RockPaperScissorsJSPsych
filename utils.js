@@ -62,6 +62,16 @@ function sample(p) {
     }
 }
 
+function sample_dict(p) {
+    i = Math.random()
+    P = Object.values(p).map((sum => value => sum += value)(0))
+    for (let pidx=0; pidx <= P.length; pidx++) {
+        if (i < P[pidx]) {
+            return Object.keys(p)[pidx];
+        }
+    }
+}
+
 function add(a, b) {
     return a + b;
 }
@@ -82,4 +92,21 @@ function randomize(values) {
   }
 
   return values;
+}
+
+function choice(s) {
+    return s[Math.floor(Math.random() * s.length)]
+}
+
+const max = (arr) => Math.max(...arr);
+
+let f = (a, b) => [].concat(...a.map(a => b.map(b => [].concat(a, b))));
+let cartesian = (a, b, ...c) => b ? cartesian(f(a, b), ...c) : a;
+
+function first_order_markov(ts) {
+    const idxs = cartesian("RPS".split(""), "RPS".split("")).map((x)=>x[0]+x[1])
+    const d = Object.assign({}, ...idxs.map((x) => ({[x]: 1})))
+    n = _.values(d).reduce(add)
+    p = Object.assign({}, ...idxs.map((x)=> ({[x]: d[x] / n})))
+    return p;
 }

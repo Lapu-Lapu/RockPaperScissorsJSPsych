@@ -121,6 +121,18 @@ const learn_preference = function() {
     return beat_symbol[prediction];
 }
 
+const first_order_strategy = function() {
+    var data = jsPsych.data.get().trials.filter(d => Boolean(d.bot_response))
+    d = data[data.length-1]
+    if (!Boolean(d)) { return RPS[Math.floor(Math.random() * 3)]; }
+    data = data.map((d)=>[d.response, d.bot_response])
+    console.log(data);
+    p = first_order_markov(data)
+    var prediction = sample_dict(p)[0]  // Todo: condition
+    console.log(`p: ${p}`)
+    return beat_symbol[prediction];
+}
+
 const dont_always_copy_opponent_move = function () {
     var data = jsPsych.data.get().trials.filter(d => Boolean(d.bot_response))
     d = data[data.length-1]
@@ -143,7 +155,7 @@ const sampled_strategy = Math.floor(Math.random() * strategies.length - 1) + 1;
 console.log('strategy:');
 console.log(sampled_strategy);
 //const strategy = dont_always_copy_opponent_move;
-const strategy = strategies[sampled_strategy];
+const strategy = first_order_strategy;//strategies[sampled_strategy];
 const fixation_cross = '<div style="font-size:20px;"><b>+</b></div>';
 
 //////////////////// jsPsych Trials ////////////////////////////////////////////////////
