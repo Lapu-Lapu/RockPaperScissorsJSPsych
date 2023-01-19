@@ -188,11 +188,12 @@ var countdown = {
         var start_time = performance.now();
         var interval = setInterval(function() {
             var time_left = wait_time - (performance.now() - start_time);
-            document.querySelector('#clock').innerHTML = sec2rps(time_left)
             if (time_left <= 0) {
-                // console.log("stop countdown")
-		document.querySelector('#clock').innerHTML = "";
+                console.log("stop countdown")
                 clearInterval(interval);
+                //document.querySelector('#clock').innerHTML = "";
+            } else {
+                document.querySelector('#clock').innerHTML = sec2rps(time_left)
             }
         }, 400)
     }
