@@ -23,7 +23,7 @@ const countdown_time = 1500; // in milliseconds
 const N = 200;
 
 const group = (Math.random() < 0.5) ? 1 : 2
-const instructions = (group == 1) ? instructions1 : instructions2
+const group_instruction = (group == 1) ? instructions1 : instructions2
 
 const timeline = []
 
@@ -254,13 +254,27 @@ timeline.push(consent)
 var welcome = {
       type: jsPsychHtmlButtonResponse,
       stimulus: instructions,
-      choices: ['Experiment starten!']
+      choices: ['Ich habe verstanden!']
 };
 timeline.push(welcome)
+
+var group_info = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: group_instruction,
+      choices: ['Experiment starten!']
+};
+timeline.push(group_info)
+
+var group_reminder = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: group_instruction,
+      choices: ['Ok, weiter!']
+};
 
 timeline.push(start)
 timeline.push(...Array.from(".".repeat(N)).map(() => trial));
 // const timeline = Array.from(".".repeat(N)).map(() => trial);
+timeline.splice(100, 0, group_reminder);
 
 timeline.push(survey)
 
