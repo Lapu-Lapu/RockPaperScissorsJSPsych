@@ -155,7 +155,7 @@ const sampled_strategy = Math.floor(Math.random() * strategies.length - 1) + 1;
 console.log('strategy:');
 console.log(sampled_strategy);
 //const strategy = dont_always_copy_opponent_move;
-const strategy = first_order_strategy;//strategies[sampled_strategy];
+const strategy = strategies[sampled_strategy];
 const fixation_cross = '<div style="font-size:20px;"><b>+</b></div>';
 
 //////////////////// jsPsych Trials ////////////////////////////////////////////////////

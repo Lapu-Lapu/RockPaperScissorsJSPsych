@@ -103,8 +103,12 @@ const max = (arr) => Math.max(...arr);
 let f = (a, b) => [].concat(...a.map(a => b.map(b => [].concat(a, b))));
 let cartesian = (a, b, ...c) => b ? cartesian(f(a, b), ...c) : a;
 
+// build sequential pairs with full current state, next human state
+// count h=X | h=X_-1, b=X-1
+// normalize to get probability, or directly take max
 function first_order_markov(ts) {
     const idxs = cartesian("RPS".split(""), "RPS".split("")).map((x)=>x[0]+x[1])
+    // init dictionary of counts
     const d = Object.assign({}, ...idxs.map((x) => ({[x]: 1})))
     n = _.values(d).reduce(add)
     p = Object.assign({}, ...idxs.map((x)=> ({[x]: d[x] / n})))
