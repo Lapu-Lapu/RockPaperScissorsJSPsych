@@ -20,6 +20,16 @@
     <link href="custom.css" rel="stylesheet" type="text/css" />
   </head>
   <body></body>
+	<script>
+		if (window.jatos && jatos.urlQueryParameters?.SONA_ID) {
+			    console.log('Sona information is available')
+			    sona_participant_id = jatos.urlQueryParameters.SONA_ID
+		} else {
+			    console.log('Sona information is not available (setting value to -1)')
+			    sona_participant_id = -1
+		}
+		console.log('sona_participant_id = ' + sona_participant_id)
+	</script>
   <script src="consent_msg.html"></script>
   <script src="rps_game.js">
   </script>

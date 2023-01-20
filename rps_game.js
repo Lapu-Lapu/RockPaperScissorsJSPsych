@@ -2,7 +2,8 @@ var jsPsych = initJsPsych({
     on_finish: function() {
         //console.log(jsPsych.data.get().json());
         jatos.submitResultData(jsPsych.data.get().json());
-        jatos.endStudy();
+	jatos.endStudyAndRedirect(`https://marburg-psychology.sona-systems.com/webstudy_credit.aspx?experiment_id=861&credit_token=98c756dae1484e55a7745327f47131fc&survey_code=${sona_participant_id}`);
+        //jatos.endStudy();
     },
     show_progress_bar: true,
     message_progress_bar: 'Fortschritt'
@@ -154,8 +155,8 @@ const sampled_strategy = Math.floor(Math.random() * strategies.length - 1) + 1;
 //const sampled_strategy = 4;
 console.log('strategy:');
 console.log(sampled_strategy);
-//const strategy = dont_always_copy_opponent_move;
-const strategy = strategies[sampled_strategy];
+const strategy = learn_preference;
+//const strategy = strategies[sampled_strategy];
 const fixation_cross = '<div style="font-size:20px;"><b>+</b></div>';
 
 //////////////////// jsPsych Trials ////////////////////////////////////////////////////
@@ -164,7 +165,7 @@ const start = {
     type: jsPsychHtmlButtonResponseRPS,
     stimulus: `<p>.</p><p>Klicken Sie auf ${fixation_cross} um die erste Runde zu starten.</p>`,
     choices: [fixation_cross],
-    data: {strategy: sampled_strategy},
+    data: {strategy: sampled_strategy, vp_id: sona_participant_id},
     button_html: '<button class="jspsych-btn-fixation">%choice%</button>',
     on_start: function () {
         document
